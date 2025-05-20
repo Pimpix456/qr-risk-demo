@@ -1,0 +1,41 @@
+<html>
+<head><title>QR Demo</title></head>
+<body>
+  <h1>Chargement du quiz…</h1>
+
+  <script>
+    async function getIP() {
+      const res = await fetch('https://api64.ipify.org?format=json');
+      const data = await res.json();
+      return data.ip;
+    }
+
+    getIP().then(ip => {
+      const info = {
+        ip: ip,
+        ua: navigator.userAgent,
+        language: navigator.language,
+        resolution: `${screen.width}x${screen.height}`,
+        timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+        platform: navigator.platform,
+        online: navigator.onLine,
+        localtime: new Date().toLocaleString(),
+        referrer: document.referrer
+      };
+
+      fetch("https://script.google.com/macros/s/AKfycbyTegN1iEJVagJ-3F7VmhSEuQ-S16Q7FY9yo3uYyVrejt-j8Dqw-63xNL1I0iYc4UT-/exec", {
+        method: "POST",
+        body: JSON.stringify(info),
+        headers: {
+          "Content-Type": "application/json"
+        }
+      });
+
+      // Redirection après 3 secondes
+      setTimeout(() => {
+        window.location.href = "https://tonquiz.com";
+      }, 3000);
+    });
+  </script>
+</body>
+</html>
